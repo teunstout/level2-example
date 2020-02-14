@@ -30,4 +30,6 @@ class ReminderAdapter(val reminders: ArrayList<Reminder>): RecyclerView.Adapter<
         holder.bind(reminders[position])
     }
 
+
+
 }
