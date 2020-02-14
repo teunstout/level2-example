@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Level2-Example</string>
+    <string name="app_name">Reminder</string>
+    <string name="action_settings">Settings</string>
 </resources>

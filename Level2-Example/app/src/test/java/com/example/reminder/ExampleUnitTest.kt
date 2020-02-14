@@ -1,4 +1,4 @@
-package com.example.level2_example
+package com.example.reminder
 
 import org.junit.Test
 
