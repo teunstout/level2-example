@@ -15,10 +15,11 @@ import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity() {
     private val reminders = arrayListOf(
-        Reminder("Sporten"), Reminder("Afspraak docter"), Reminder("Kapper")
+        Reminder("Sporten"),
+        Reminder("Afspraak docter"),
+        Reminder("Kapper")
     )
     private val reminderAdapter = ReminderAdapter(reminders)
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,36 +33,45 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Initianaliseer de view en geef daar de item touch helper aan mee
+     */
+    private fun initViews() {
+        rvReminders.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        rvReminders.adapter = reminderAdapter
+        rvReminders.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        createItemTouchHelper().attachToRecyclerView(rvReminders)
+    }
+
+    /**
+     * menu met settings recht boven in je app. kan je verwijderen gebeurt niks
+     * laat het er lekker in staan.
+     */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private fun initViews() {
-        rvReminders.layoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.VERTICAL, false)
-        rvReminders.adapter = reminderAdapter
-        rvReminders.addItemDecoration(DividerItemDecoration(this@MainActivity, DividerItemDecoration.VERTICAL))
-        createItemTouchHelper().attachToRecyclerView(rvReminders)
-    }
-
+    /**
+     * kijkt of de input niet leeg is en gaat verder door een reminder te maken met de input.
+     * zegt tegen de adapter dat er iets is verandererd en alles word geupdate.
+     * als de textfield niet leeg is maakt hij hem leeg.
+     */
     private fun addReminder(reminder: String) {
         if (reminder.isNotBlank()) {
             reminders.add(Reminder(reminder))
             reminderAdapter.notifyDataSetChanged()
             etReminderText.text?.clear()
         } else {
-            Snackbar.make(etReminder, "You must fill in the input field!", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(etReminder, "You must fill in the input field!", Snackbar.LENGTH_SHORT)
+                .show()
         }
     }
 
@@ -71,7 +81,6 @@ class MainActivity : AppCompatActivity() {
      * and uses callbacks to signal when a user is performing these actions.
      */
     private fun createItemTouchHelper(): ItemTouchHelper {
-
         // Callback which is used to create the ItemTouch helper. Only enables left swipe.
         // Use ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) to also enable right swipe.
         val callback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {

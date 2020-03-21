@@ -9,7 +9,6 @@ import kotlinx.android.synthetic.main.item_reminder.view.*
 class ReminderAdapter(val reminders: ArrayList<Reminder>): RecyclerView.Adapter<ReminderAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         fun bind(reminder: Reminder) {
             itemView.tvReminder.text = reminder.reminderText
         }
@@ -19,7 +18,6 @@ class ReminderAdapter(val reminders: ArrayList<Reminder>): RecyclerView.Adapter<
         return  ViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_reminder, parent, false)
         )
-
     }
 
     override fun getItemCount(): Int {
@@ -29,7 +27,4 @@ class ReminderAdapter(val reminders: ArrayList<Reminder>): RecyclerView.Adapter<
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(reminders[position])
     }
-
-
-
 }
